@@ -9,7 +9,7 @@ public class YourRoom extends Room{
 	public YourRoom(String name) {
 		
 		super(name);
-		this.description = "This is your room.";
+		this.description = "This is your room. It's not very exciting. It has your bed, your sibling's bed, and a computer";
 		this.changes = "CHANGES";
 		
 		this.items = new ArrayList<Item>();

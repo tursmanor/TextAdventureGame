@@ -20,12 +20,23 @@ public class Game {
 		System.out.print("> ");
 		
 		String[] curIn = parser.getCommand(userIn, curRoom, inv).split(" ");
-
+		String noun = "";
 		while(!curIn[0].equalsIgnoreCase("quit")){
+			if(curIn.length > 1){
+				//Makes noun from curIn
+				noun = "";
+				for(int i = 1; i < curIn.length; i++){
+					noun = noun + " " + curIn[i];
+				}
+				noun = noun.trim();
+			}
 			
 			switch(curIn[0]){
 			case "pun":
 				System.out.println("pun");
+				break;
+			case "look":
+				curRoom.look(noun);
 				break;
 			case "use":
 				System.out.println("use");
@@ -43,6 +54,8 @@ public class Game {
 			
 			System.out.print("> ");
 			curIn = parser.getCommand(userIn, curRoom, inv).split(" ");
+			
+			
 		}
 		
 		System.out.println("THANKS FOR PLAYING, C-C-C-CHUMP.");

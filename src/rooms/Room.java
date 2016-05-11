@@ -43,6 +43,10 @@ public abstract class Room {
 		printName();
 		printDesc();
 		printChanges();
+		for(Item itm : items){
+			if(itm.canSee())
+				System.out.println("There is a " + itm.getName() + " here.");
+		}
 	}
 	
 	public boolean containsItem(String str){
@@ -54,5 +58,13 @@ public abstract class Room {
 	
 	public void addPoints(){
 		points++;
+	}
+	
+	public void look(String itmName){
+		for(Item itm : items){
+			if(itm.getName().equalsIgnoreCase(itmName)){
+				System.out.println(itm.getDescription());
+			}
+		}
 	}
 }

@@ -51,10 +51,11 @@ public class Parser {
 		//Makes noun from cmd
 		String noun = "";
 		for(int i = 1; i < cmd.length; i++){
-			noun = noun + cmd[i];
+			noun = noun + " " + cmd[i];
 		}
-		noun.trim();
+		noun = noun.trim();
 		
+		//Checks if the command is legal
 		if(isVerb(cmd[0]) && isNoun(noun, rm, inv)) { 
 			return cmd[0] + " " + noun; 
 		} else {
