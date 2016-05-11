@@ -41,7 +41,8 @@ public class Parser {
 		
 		//Checks for one word commands
 		if(cmd.length == 1){
-			if(cmd[0].equals("pun") || cmd[0].equals("wait") || cmd[0].equals("quit")){
+			if(cmd[0].equals("pun") || cmd[0].equals("wait") || 
+					cmd[0].equals("quit") || cmd[0].equals("look") || cmd[0].equals("inventory")){
 				return cmd[0];
 			} else {
 				return "NA";

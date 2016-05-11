@@ -10,3 +10,5 @@ go
 look
 move
 quit
+inventory
+help

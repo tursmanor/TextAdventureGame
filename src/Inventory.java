@@ -13,12 +13,24 @@ public class Inventory {
 	}
 	
 	public String add(Item newItem){
-		inv.put(newItem.getName(), newItem);	
+		inv.put(newItem.getName().toLowerCase(), newItem);	
 		return "You picked up " + newItem.getName() + ".";
 	}
 	
 	public boolean containsItem(String str){
 		return inv.containsKey(str);
+	}
+	
+	public void look(String itmName){
+		if(inv.containsKey(itmName)){
+			System.out.println(inv.get(itmName).getDescription());
+		}
+	}
+	
+	public void printInv(){
+		for(Item itm : inv.values()){
+			System.out.println(itm.getName());
+		}
 	}
 	
 }

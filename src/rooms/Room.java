@@ -3,7 +3,6 @@ import items.Item;
 
 import java.util.List;
 
-
 public abstract class Room {
 	
 	private String name;
@@ -67,4 +66,19 @@ public abstract class Room {
 			}
 		}
 	}
+	
+	public Item get(String itmName) throws Exception{
+		for(Item itm : items){
+			if(itm.getName().equalsIgnoreCase(itmName)){
+				if(!itm.canSee()){
+					System.out.println("You can't take that");
+					return null;
+				}
+				items.remove(itm);
+				return itm;
+			}
+		}
+		throw new Exception("Code is broken if this happens");
+	}
+	
 }
