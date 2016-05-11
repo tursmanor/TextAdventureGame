@@ -1,0 +1,12 @@
+save
+restart
+wait
+pun
+talk
+attack
+get
+use
+go
+look
+move
+quit
