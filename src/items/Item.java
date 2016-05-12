@@ -48,4 +48,6 @@ public abstract class Item {
 	public boolean hasContents(){
 		return !(contents == null);
 	}
+	
+	public void talkToItem(){};
 }

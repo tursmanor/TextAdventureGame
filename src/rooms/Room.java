@@ -15,13 +15,13 @@ public abstract class Room {
 	public static int points;
 	public static final int MAX_POINTS = 400;
 	public static int time;
-	
+	public static boolean saved = false;
 	public Room(String name){
 		this.name = name;
 	}
 	
-	public void printName(){
-		System.out.println(name);
+	public String getName(){
+		return name;
 	}
 	
 	public void printDesc(){
@@ -49,7 +49,7 @@ public abstract class Room {
 	}
 	
 	public void enterRoom(){
-		printName();
+		System.out.println(name);
 		printDesc();
 		printChanges();
 		for(Item itm : items){
@@ -93,5 +93,15 @@ public abstract class Room {
 	}
 	
 	public void use(Item itm){}
+	
+	public void pun(){}
+	
+	public void talk(String itmName){
+		for(Item itm : items){
+			if(itm.getName().equalsIgnoreCase(itmName)){
+				itm.talkToItem();
+			}
+		}
+	}
 	
 }

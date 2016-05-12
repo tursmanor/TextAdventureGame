@@ -10,5 +10,10 @@ public class Computer extends Item{
 		this.activated = false;
 		this.contents = null;
 	}
+	
+	@Override
+	public void talkToItem(){
+		System.out.println("You tell your computer you love it. It doesn't respond.");
+	}
 
 }

@@ -11,4 +11,9 @@ public class FloppyDisk extends Item{
 		this.contents = null;
 	}
 
+	@Override
+	public void talkToItem(){
+		System.out.println("You tell your floppy disk it is old. You hurt its feelings.");
+	}
+
 }

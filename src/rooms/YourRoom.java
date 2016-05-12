@@ -55,4 +55,7 @@ public class YourRoom extends Room{
 	
 	}
 
+	public void pun(){
+		System.out.println("I never meta genre-aware character I didn't like... You say to yourself.");
+	}
 }

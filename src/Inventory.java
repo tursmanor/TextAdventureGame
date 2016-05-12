@@ -27,6 +27,12 @@ public class Inventory {
 		}
 	}
 	
+	public void talk(String itmName){
+		if(inv.containsKey(itmName)){
+			inv.get(itmName).talkToItem();
+		}
+	}
+	
 	public void printInv(){
 		for(Item itm : inv.values()){
 			System.out.println(itm.getName());
