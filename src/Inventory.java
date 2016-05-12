@@ -6,7 +6,7 @@ import java.util.Map;
 
 public class Inventory {
 
-	Map<String, Item> inv;
+	public Map<String, Item> inv;
 	
 	public Inventory(){
 		inv = new HashMap<String, Item>();
@@ -33,4 +33,9 @@ public class Inventory {
 		}
 	}
 	
+	public Item useItem(String itmName){
+		Item temp = inv.get(itmName);
+		inv.remove(itmName);
+		return temp;
+	}
 }

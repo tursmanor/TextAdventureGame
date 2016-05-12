@@ -6,6 +6,9 @@ public class Computer extends Item{
 		super(n);
 		this.description = "Your computer.";
 		this.canPickUp = false;
+		this.hidden = false;
+		this.activated = false;
+		this.contents = null;
 	}
 
 }

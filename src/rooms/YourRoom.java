@@ -9,15 +9,50 @@ public class YourRoom extends Room{
 	public YourRoom(String name) {
 		
 		super(name);
-		this.description = "This is your room. It's not very exciting. It has your bed, your sibling's bed, and a computer";
+		this.description = "This is your room. It's not very exciting. " +
+				"It has your bed, your sibling's bed, and a computer";
 		this.changes = "CHANGES";
 		
 		this.items = new ArrayList<Item>();
 		items.add(new FloppyDisk("BORK Floppy Disk"));
 		items.add(new Computer("Computer"));
 		
+		this.usableItems = new ArrayList<Item>();
+		usableItems.add(new FloppyDisk("BORK Floppy Disk"));
+		usableItems.add(new Computer("Computer"));
+		
 		this.directions = new boolean[] {false,false,true,false};
 		
+	}
+	
+	@Override 
+	public void use(Item itm){
+		switch(itm.getName()){
+		case "Computer":
+			if(itm.hasContents() &&
+					itm.getContentsStr().equalsIgnoreCase("BORK Floppy Disk") &&
+					items.get(0).getActivated()){
+				System.out.println("Playnig BORK...");
+			} else {
+				itm.toggle();
+				if(itm.getActivated()){
+					System.out.println("You turned the computer on.");
+				} else {
+					System.out.println("You turned the computer off");
+				}
+			}
+			break;
+		case "BORK Floppy Disk":
+			Room.points++;
+			items.get(0).putContents(itm);
+			System.out.println("BORK disk in computer");
+			break;
+		default :
+			System.out.println("You can't use that " + itm.getName());
+			break;
+		}
+	
+	
 	}
 
 }

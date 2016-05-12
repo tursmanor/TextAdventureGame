@@ -6,6 +6,9 @@ public class FloppyDisk extends Item{
 		super(n);
 		this.description = "A floppy disk labeled \"BORK.\"";
 		this.canPickUp = true;
+		this.hidden = false;
+		this.activated = false;
+		this.contents = null;
 	}
 
 }

@@ -11,6 +11,7 @@ public class Game {
 		Scanner userIn = new Scanner(System.in);
 		Parser parser = new Parser("verbs.txt");
 		Room.points = 0;
+		Room.time = 0;
 		Inventory inv = new Inventory();
 
 		System.out.println("WELCOME.");
@@ -32,10 +33,16 @@ public class Game {
 				noun = noun.trim();
 			}
 			
+			// Increment timer
+			Room.time++;
+			
+			// Look through valid commands
 			switch(curIn[0]){
+			
 			case "inventory":
 				inv.printInv();
 				break;
+				
 			case "look":
 				if(noun.equals("")){
 					curRoom.enterRoom();
@@ -44,9 +51,19 @@ public class Game {
 					inv.look(noun);
 				}
 				break;
+				
 			case "use":
-				System.out.println("use");
+				if(inv.containsItem(noun)){
+					curRoom.use(inv.useItem(noun));
+				} else if (curRoom.containsItem(noun) && !curRoom.getItem(noun).canTake()){
+					curRoom.use(curRoom.getItem(noun));
+				} else if (curRoom.containsItem(noun) && curRoom.getItem(noun).canTake()){
+					System.out.println("You should probably get that " + noun);
+				} else {
+					System.out.println("You don't need that " + noun);
+				}
 				break;
+				
 			case "get":
 				Item itm = curRoom.get(noun);
 				if(itm != null){
@@ -59,6 +76,7 @@ public class Game {
 				break;
 			default:
 				System.out.println("Invalid command.");
+				Room.time--;
 				break;
 			}
 			

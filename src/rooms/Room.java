@@ -9,10 +9,12 @@ public abstract class Room {
 	protected String description;
 	protected String changes;
 	protected List<Item> items;
+	protected List<Item> usableItems;
 	protected boolean[] directions; //Up, right, down, left
 	
 	public static int points;
 	public static final int MAX_POINTS = 400;
+	public static int time;
 	
 	public Room(String name){
 		this.name = name;
@@ -34,7 +36,15 @@ public abstract class Room {
 		return items;
 	}
 	
-	public boolean[] getDir(){
+	public Item getItem(String itmName) throws Exception{
+		for(Item itm : items){
+			if(itm.getName().equalsIgnoreCase(itmName)){ return itm; }
+		}
+		
+		throw new Exception("Item not found");
+	}
+	
+ 	public boolean[] getDir(){
 		return directions;
 	}
 	
@@ -59,6 +69,7 @@ public abstract class Room {
 		points++;
 	}
 	
+	// Command functions below
 	public void look(String itmName){
 		for(Item itm : items){
 			if(itm.getName().equalsIgnoreCase(itmName)){
@@ -80,5 +91,7 @@ public abstract class Room {
 		}
 		throw new Exception("Code is broken if this happens");
 	}
+	
+	public void use(Item itm){}
 	
 }
