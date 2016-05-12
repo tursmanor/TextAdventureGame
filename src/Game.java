@@ -6,17 +6,23 @@ import items.*;
 
 public class Game {
 	
+		public static Room[][] gameMap;
+		public static int xCoord;
+		public static int yCoord;
+	
 	public static void main(String[] args) throws Exception {
-
+		
+		Room curRoom = initializeMap();
 		Scanner userIn = new Scanner(System.in);
 		Parser parser = new Parser("verbs.txt");
 		Room.points = 0;
 		Room.time = 0;
 		Inventory inv = new Inventory();
+		
 
+		
 		System.out.println("WELCOME.");
 		System.out.println("INTRO TEXT");
-		Room curRoom = new YourRoom("Your Room");
 		curRoom.enterRoom();
 		System.out.print("> ");
 		
@@ -68,6 +74,7 @@ public class Game {
 				break;
 				
 			case "go":
+				curRoom = go(curRoom, noun);
 				break;
 				
 			case "save":
@@ -171,7 +178,6 @@ public class Game {
 		System.out.println("Go <direction> - travel <direction>. " +
 				"Permitted directions: north, south, east, and west.");
 		System.out.println("Look <noun> - look at <noun>");
-		System.out.println("Move <noun> - push <noun>");
 		System.out.println("Inventory - prints what you are currently carrying");
 		System.out.println("Save - save your current BORK game");
 		System.out.println("Help - see (this) list of commands");
@@ -187,4 +193,63 @@ public class Game {
 			System.out.println("You can't save BORK! It isn't here.");
 		}
 	}
+
+	public static Room go(Room curRoom, String direction) throws Exception{
+		int index = 0;
+		
+		switch(direction.toLowerCase()){
+		
+		case "north":
+			index = 0;
+			break;
+		case "south":
+			index = 2;
+			break;
+		case "east":
+			index = 1;
+			break;
+		case "west":
+			index = 3;
+			break;
+		default:
+			throw new Exception("Invalid direction made it too far.");
+		
+		}
+		
+		if(curRoom.directions[index]){
+			if (index == 0) { yCoord--; }
+			else if (index == 1) { xCoord++; }
+			else if (index == 2) { yCoord++; }
+			else { xCoord--; };
+			gameMap[yCoord][xCoord].enterRoom();
+			return gameMap[yCoord][xCoord];
+			
+		} else {
+			System.out.println("You can't travel through walls.");
+			return null;
+		}
+	}
+	
+	public static Room initializeMap (){
+		//Initialize Game Map
+		gameMap = new Room[5][5];
+		for(int i = 0; i < gameMap[0].length; i++){
+			for(int j = 0; j < gameMap.length; j++){
+				gameMap[i][j] = null;
+			}
+		}
+		
+		//Set rooms
+		gameMap[0][3] = new YourRoom("Your Room");
+		gameMap[1][3] = new Hallway("Hallway");
+		gameMap[1][2] = new Hallway("Hallway");
+		gameMap[1][1] = new Hallway("Hallway");
+		
+		xCoord = 3;
+		yCoord = 0;
+		return gameMap[0][3];
+	}
+
+
+
 }

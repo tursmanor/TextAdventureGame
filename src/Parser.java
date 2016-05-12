@@ -11,10 +11,27 @@ import rooms.*;
 public class Parser {
 	
 	Set<String> verbs; 
+	Set<String> directions;
+	Set<String> oneWordCommands;
 	
 	public Parser (){
 		//Initializes list of verbs
 		verbs = new HashSet<String>();
+		
+		directions = new HashSet<String>();
+		directions.add("north");
+		directions.add("south");
+		directions.add("east");
+		directions.add("west");
+		
+		oneWordCommands = new HashSet<String>();
+		oneWordCommands.add("save");
+		oneWordCommands.add("wait");
+		oneWordCommands.add("pun");
+		oneWordCommands.add("look");
+		oneWordCommands.add("inventory");
+		oneWordCommands.add("help");
+		oneWordCommands.add("quit");
 		
 	}
 	
@@ -26,6 +43,22 @@ public class Parser {
 			verbs.add(in.nextLine());
 		}
 		in.close();
+		
+		directions = new HashSet<String>();
+		directions.add("north");
+		directions.add("south");
+		directions.add("east");
+		directions.add("west");
+		
+		oneWordCommands = new HashSet<String>();
+		oneWordCommands.add("save");
+		oneWordCommands.add("wait");
+		oneWordCommands.add("pun");
+		oneWordCommands.add("look");
+		oneWordCommands.add("inventory");
+		oneWordCommands.add("help");
+		oneWordCommands.add("quit");
+		
 	}
 	
 	public boolean isVerb (String str){
@@ -33,7 +66,8 @@ public class Parser {
 	}
 	
 	public boolean isNoun (String str, Room rm, Inventory inv){
-		return rm.containsItem(str) || inv.containsItem(str) || str.equalsIgnoreCase("me");
+		return rm.containsItem(str) || inv.containsItem(str) 
+				|| str.equalsIgnoreCase("me") || directions.contains(str);
 	}
 	
 	public String getCommand(Scanner in, Room rm, Inventory inv){
@@ -41,8 +75,7 @@ public class Parser {
 		
 		//Checks for one word commands
 		if(cmd.length == 1){
-			if(cmd[0].equals("pun") || cmd[0].equals("wait") || 
-					cmd[0].equals("quit") || cmd[0].equals("look") || cmd[0].equals("inventory")){
+			if(oneWordCommands.contains(cmd[0])){
 				return cmd[0];
 			} else {
 				return "NA";

@@ -10,7 +10,7 @@ public abstract class Room {
 	protected String changes;
 	protected List<Item> items;
 	protected List<Item> usableItems;
-	protected boolean[] directions; //Up, right, down, left
+	public boolean[] directions; //Up, right, down, left
 	
 	public static int points;
 	public static final int MAX_POINTS = 400;

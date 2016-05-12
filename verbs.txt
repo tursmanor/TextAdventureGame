@@ -7,7 +7,6 @@ get
 use
 go
 look
-move
 quit
 inventory
 help
