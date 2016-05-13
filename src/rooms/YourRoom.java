@@ -1,7 +1,8 @@
 package rooms;
 import items.Computer;
-import items.FloppyDisk;
 import items.Item;
+import items.pickup.*;
+
 import java.util.ArrayList;
 
 public class YourRoom extends Room{
@@ -14,9 +15,14 @@ public class YourRoom extends Room{
 				"It has your bed, your sibling's bed, and a computer";
 		this.changes = "CHANGES";
 		
-		//Adds items
+		//Adds items - can pick up
 		items.add(new FloppyDisk("BORK Floppy Disk"));
+		items.add(new Flashlight("Flashlight"));
+		items.add(new Pen("Pen"));
+		
+		//Add items - fixed
 		items.add(new Computer("Computer"));
+		
 		
 		//Adds usable items
 		usableItems.add(new FloppyDisk("BORK Floppy Disk"));

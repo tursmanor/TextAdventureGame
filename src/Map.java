@@ -28,6 +28,7 @@ public class Map {
 				gameMap[3][4] = new Kitchen("Kitchen");
 				gameMap[4][4] = new Basement("Basement");
 				
+				//Set starting position
 				xCoord = 3;
 				yCoord = 0;
 	}

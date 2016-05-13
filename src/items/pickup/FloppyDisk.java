@@ -1,4 +1,6 @@
-package items;
+package items.pickup;
+
+import items.Item;
 
 public class FloppyDisk extends Item{
 

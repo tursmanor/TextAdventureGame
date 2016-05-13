@@ -1,5 +1,6 @@
 import items.Item;
-
+import items.*;
+import items.pickup.*;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -10,6 +11,7 @@ public class Inventory {
 	
 	public Inventory(){
 		inv = new HashMap<String, Item>();
+		inv.put("Phone", new Phone("Phone"));
 	}
 	
 	public String add(Item newItem){
