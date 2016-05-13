@@ -1,6 +1,4 @@
-import rooms.Hallway;
-import rooms.Room;
-import rooms.YourRoom;
+import rooms.*;
 
 
 public class Map {
@@ -18,10 +16,17 @@ public class Map {
 				}
 				
 				//Set rooms
+				gameMap[0][1] = new ParentsRoom("Your Parents' Room");
+				gameMap[0][2] = new Closet("Closet");
 				gameMap[0][3] = new YourRoom("Your Room");
+				gameMap[1][0] = new Bathroom("Bathroom");
 				gameMap[1][3] = new Hallway("Hallway");
 				gameMap[1][2] = new Hallway("Hallway");
 				gameMap[1][1] = new Hallway("Hallway");
+				gameMap[1][4] = new LivingRoom("Living Room");
+				gameMap[2][4] = new DiningRoom("Dining room");
+				gameMap[3][4] = new Kitchen("Kitchen");
+				gameMap[4][4] = new Basement("Basement");
 				
 				xCoord = 3;
 				yCoord = 0;

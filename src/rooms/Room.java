@@ -1,6 +1,7 @@
 package rooms;
 import items.Item;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -20,6 +21,8 @@ public abstract class Room {
 	public static boolean saved = false;
 	public Room(String name){
 		this.name = name;
+		this.items = new ArrayList<Item>();
+		this.usableItems = new ArrayList<Item>();
 		this.directions = new HashMap<String, Boolean>();
 	}
 	

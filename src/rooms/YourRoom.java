@@ -9,18 +9,20 @@ public class YourRoom extends Room{
 	public YourRoom(String name) {
 		
 		super(name);
+		//Description
 		this.description = "This is your room. It's not very exciting. " +
 				"It has your bed, your sibling's bed, and a computer";
 		this.changes = "CHANGES";
 		
-		this.items = new ArrayList<Item>();
+		//Adds items
 		items.add(new FloppyDisk("BORK Floppy Disk"));
 		items.add(new Computer("Computer"));
 		
-		this.usableItems = new ArrayList<Item>();
+		//Adds usable items
 		usableItems.add(new FloppyDisk("BORK Floppy Disk"));
 		usableItems.add(new Computer("Computer"));
 		
+		//Adds directopms
 		this.directions.put("north", false);
 		this.directions.put("south", true);
 		this.directions.put("east", false);
