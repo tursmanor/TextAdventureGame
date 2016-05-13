@@ -21,7 +21,10 @@ public class YourRoom extends Room{
 		usableItems.add(new FloppyDisk("BORK Floppy Disk"));
 		usableItems.add(new Computer("Computer"));
 		
-		this.directions = new boolean[] {false,false,true,false};
+		this.directions.put("north", false);
+		this.directions.put("south", true);
+		this.directions.put("east", false);
+		this.directions.put("west", false);
 		
 	}
 	

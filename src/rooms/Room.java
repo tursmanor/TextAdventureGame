@@ -1,7 +1,9 @@
 package rooms;
 import items.Item;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public abstract class Room {
 	
@@ -10,7 +12,7 @@ public abstract class Room {
 	protected String changes;
 	protected List<Item> items;
 	protected List<Item> usableItems;
-	public boolean[] directions; //Up, right, down, left
+	public Map<String, Boolean> directions;
 	
 	public static int points;
 	public static final int MAX_POINTS = 400;
@@ -18,7 +20,9 @@ public abstract class Room {
 	public static boolean saved = false;
 	public Room(String name){
 		this.name = name;
+		this.directions = new HashMap<String, Boolean>();
 	}
+	
 	
 	public String getName(){
 		return name;
@@ -44,9 +48,7 @@ public abstract class Room {
 		throw new Exception("Item not found");
 	}
 	
- 	public boolean[] getDir(){
-		return directions;
-	}
+ 	
 	
 	public void enterRoom(){
 		System.out.println(name);
