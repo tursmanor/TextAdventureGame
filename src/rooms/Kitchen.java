@@ -16,7 +16,6 @@ public class Kitchen extends Room {
 		items.add(new Sponge("Sponge"));
 		items.add(new DirtyDishes("Dirty Dishes"));
 		
-		
 		//Adds directions
 		this.directions.put("north", true);
 		this.directions.put("south", true);

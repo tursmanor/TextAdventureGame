@@ -7,10 +7,12 @@ public abstract class Item {
 	protected boolean canPickUp;
 	protected boolean hidden;
 	protected boolean activated; 
+	protected boolean completed;
 	protected Item contents;
 	
 	public Item(String n){
 		name = n;
+		completed = false;
 	}
 	
 	public String getName(){
@@ -25,8 +27,20 @@ public abstract class Item {
 		return canPickUp;
 	}
 	
+	public void hide (){
+		hidden = true;
+	}
+	
 	public boolean canSee(){
 		return (canPickUp && !hidden);
+	}
+	
+	public void complete(){
+		completed = true;
+	}
+	
+	public boolean isComplete(){
+		return completed;
 	}
 	
 	public void toggle(){

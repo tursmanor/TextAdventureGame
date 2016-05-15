@@ -19,6 +19,9 @@ public abstract class Room {
 	public static final int MAX_POINTS = 400;
 	public static int time;
 	public static boolean saved = false;
+	public static int plays = 0;
+	public static int events = 0;
+	
 	public Room(String name){
 		this.name = name;
 		this.items = new ArrayList<Item>();
@@ -50,8 +53,6 @@ public abstract class Room {
 		
 		throw new Exception("Item not found");
 	}
-	
- 	
 	
 	public void enterRoom(){
 		System.out.println(name);

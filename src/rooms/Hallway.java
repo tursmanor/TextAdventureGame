@@ -6,10 +6,10 @@ import java.util.ArrayList;
 
 public class Hallway extends Room{
 
-	public Hallway(String name) {
+	public Hallway(String name, String desc) {
 		super(name);
 		//Description
-		this.description = "This is part of the hallway";
+		this.description = desc;
 		this.changes = "CHANGES";
 	
 		//Adds directions

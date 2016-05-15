@@ -17,17 +17,38 @@ public class Game {
 		Room.time = 0;
 		Inventory inv = new Inventory();
 		Room curRoom = map.getCurRoom();
-
+		Event[] eventArr = new Event[10];
+		Event curEvent = null;
 		
-		System.out.println("WELCOME.");
-		System.out.println("INTRO TEXT");
+		//Adding Events
+		eventArr[0] = new Event("Your parents are calling you for dinner.");
+		eventArr[0].addReq(map.getRoom(4, 2).getItem("Dinner"));
+		eventArr[0].addReq(map.getRoom(4, 2).getItem("Parents"));
+		
+		eventArr[1] = new Event("Now your parents want you to wash dishes");
+		
+		eventArr[2] = new Event("Your sister lost her dinosaur stuffed animals and won't leave you alone til you find them for her.");
+		
+		
+		//Introduction
+		System.out.println("Welcome to BORK SIMULATOR 2k16. Created by Zachary Segall and Eleanor Tursman in…2k16."); 
+		System.out.println("Who are you? Why, you’re an unabashedly nostalgic teenager. And when we say nostalgic, we mean nostalgic for media that hit its peak well before you were born. You are a special soul.");
+		System.out.println("This afternoon, bundled along with the usual mail was your new copy of BORK, the famous text-adventure game from the early 80s. Sure everyone told you you could just play it for free online. Sure they gave you incredulous looks when you told them that just wouldn’t do. You had to own BORK yourself. And here it finally was! You know what they say-- the doggo goes bork bork. And you are the doggo. Time to get playing.");
 		curRoom.enterRoom();
 		System.out.print("> ");
 		
 		String[] curIn = parser.getCommand(userIn, curRoom, inv).split(" ");
 		String noun = "";
 		while(!curIn[0].equalsIgnoreCase("quit")){
-
+			if(curEvent != null && curEvent.isComplete()){ 
+				Room.events++;
+			}
+			if(Room.plays > Room.events){
+				curEvent = eventArr[Room.events];
+				curEvent.printMessage();
+			}
+			
+			
 			noun = "";
 			if(curIn.length > 1){
 				//Makes noun from curIn

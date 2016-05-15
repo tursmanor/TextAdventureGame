@@ -1,6 +1,6 @@
 package rooms;
-import items.Computer;
 import items.Item;
+import items.nopickup.Computer;
 import items.pickup.*;
 
 import java.util.ArrayList;
@@ -11,17 +11,18 @@ public class YourRoom extends Room{
 		
 		super(name);
 		//Description
-		this.description = "This is your room. It's not very exciting. " +
-				"It has your bed, your sibling's bed, and a computer";
+		this.description = "You share your room with your little sister. If your half of the room is a beachline, hers is the incoming tsunami. You’ve been trying to convince your parents to move her into the basement. Next to your messy SISTER’S BED is your small DESK with a COMPUTER on top of it. Your own clean BED is on the other side of the room. There is a door to the SOUTH.";
 		this.changes = "CHANGES";
 		
+		//Add items - fixed
+		items.add(new Computer("Computer")); //Item 0
+				
 		//Adds items - can pick up
 		items.add(new FloppyDisk("BORK Floppy Disk"));
 		items.add(new Flashlight("Flashlight"));
 		items.add(new Pen("Pen"));
 		
-		//Add items - fixed
-		items.add(new Computer("Computer"));
+		
 		
 		
 		//Adds usable items
@@ -40,18 +41,25 @@ public class YourRoom extends Room{
 	public void use(Item itm){
 		switch(itm.getName()){
 		case "Computer":
-			if(itm.hasContents() &&
-					itm.getContentsStr().equalsIgnoreCase("BORK Floppy Disk") &&
-					items.get(0).getActivated()){
-				System.out.println("Playnig BORK...");
-			} else {
-				itm.toggle();
-				if(itm.getActivated()){
-					System.out.println("You turned the computer on.");
+			
+				if(itm.hasContents() &&
+						itm.getContentsStr().equalsIgnoreCase("BORK Floppy Disk") &&
+						items.get(0).getActivated()){
+					if(Room.plays > Room.events){
+						System.out.println("You should deal with that before you play more BORK");
+					} else {
+						System.out.println("Playnig BORK...");
+						Room.plays++;
+					}
 				} else {
-					System.out.println("You turned the computer off");
+					itm.toggle();
+					if(itm.getActivated()){
+						System.out.println("You turned the computer on.");
+					} else {
+						System.out.println("You turned the computer off");
+					}
 				}
-			}
+			
 			break;
 		case "BORK Floppy Disk":
 			Room.points++;

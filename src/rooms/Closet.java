@@ -7,7 +7,7 @@ public class Closet extends Room {
 	public Closet(String name) {
 		super(name);
 		//Description
-		this.description = "This is the closet";
+		this.description = "The closet has an array of shelves stuffed with TOWELS, PILLOWS, and BEDSHEETS. You are slightly worried they will topple down any moment and engulf you. The hallway is to the SOUTH. ";
 		this.changes = "CHANGES";
 	
 		//Adds items - can pick up
