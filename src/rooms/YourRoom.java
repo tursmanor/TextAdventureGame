@@ -2,6 +2,8 @@ package rooms;
 import items.Item;
 import items.characters.Sister;
 import items.nopickup.Computer;
+import items.nopickup.Desk;
+import items.nopickup.DeskDrawer;
 import items.pickup.*;
 
 import java.util.ArrayList;
@@ -23,7 +25,9 @@ public class YourRoom extends Room{
 		
 		//Add items - fixed
 		items.add(new Computer("Computer")); //Item 0
-		items.add(new Sister("Sister"));		
+		items.add(new Sister("Sister"));
+		items.add(new Desk("Desk"));
+		items.add(new DeskDrawer("Desk Drawer"));
 		
 		//Adds items - can pick up
 		items.add(new FloppyDisk("BORK Floppy Disk"));
@@ -73,6 +77,7 @@ public class YourRoom extends Room{
 			items.get(0).putContents(itm);
 			System.out.println("BORK disk in computer");
 			break;
+			
 		case "Triceratops Plush":
 		case "T-Rex Plush":
 		case "Brontosaurus Plush":
@@ -80,11 +85,13 @@ public class YourRoom extends Room{
 								"one of her stuffed animals.");
 			itm.complete();
 			break;
+			
 		case "Bedsheet":
 			items.add(1, itm);
 			System.out.println("You spread the bedsheet on your table");
 			itm.complete();
 			break;
+			
 		case "Pen":
 			if(items.get(1).getName().equalsIgnoreCase("Bedsheet")){
 				itm.complete();
@@ -96,6 +103,7 @@ public class YourRoom extends Room{
 				System.out.println("There's nothing to write on here. You drop the pen in despair.");
 			}
 			break;
+			
 		default :
 			System.out.println("You can't use that " + itm.getName());
 			if(itm.canTake()){
@@ -106,6 +114,18 @@ public class YourRoom extends Room{
 		}
 	
 	
+	}
+
+	@Override
+	public void look(String itmName){
+		for(Item itm : items){
+			if(itm.getName().equalsIgnoreCase(itmName)){
+				if(itm.getName().equalsIgnoreCase("Desk Drawer")){
+					items.get(5).reveal();
+				}
+				System.out.println(itm.getDescription());
+			}
+		}
 	}
 
 	public void pun(){

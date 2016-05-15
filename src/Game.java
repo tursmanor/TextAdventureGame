@@ -5,9 +5,9 @@ import rooms.*;
 import items.*;
 
 public class Game {
-	
+
 	public static void main(String[] args) throws Exception {
-		
+
 		Map map = new Map();
 		Scanner userIn = new Scanner(System.in);
 		Parser parser = new Parser("verbs.txt");
@@ -19,7 +19,8 @@ public class Game {
 		Event curEvent = null;
 		int turnsInDark = 0;
 		boolean isDark = false;
-		
+		boolean lightOn = false;
+
 		//Adding Events
 		eventArr[0] = new Event("Your parents are calling you for dinner. \n" +
 				"You should probably talk to them too.");
@@ -31,14 +32,16 @@ public class Game {
 		eventArr[1].addReq(map.getRoom(1, 0).getItem("Triceratops Plush"));
 		eventArr[1].addReq(map.getRoom(4, 1).getItem("Brontosaurus Plush"));
 		eventArr[1].addReq(map.getRoom(2, 0).getItem("T-Rex Plush"));
-		
-		eventArr[2] = new Event("You need to make a map for the BORK labyrinth.");
+
+		eventArr[2] = new Event("You need to make a map for the BORK labyrinth. You\n " +
+				"realize despairingly that you don't have paper in the house. What\n " +
+				"else could you write on...?");
 		eventArr[2].addReq(map.getRoom(3, 0).getItem("Pen"));
 		eventArr[2].addReq(map.getRoom(2, 0).getItem("Bedsheet"));
-		
+
 		eventArr[3] = new Event("You need to get to turn the power back on.");
-		
-		
+
+
 		//Introduction
 		System.out.println("Welcome to BORK SIMULATOR 2k16. \n" +
 				"Created by Zachary Segall and Eleanor Tursman in 2k16."); 
@@ -57,26 +60,30 @@ public class Game {
 		System.out.println();
 		curRoom.enterRoom();
 		System.out.print("> ");
-		
+
 		String[] curIn = parser.getCommand(userIn, curRoom, inv).split(" ");
 		String noun = "";
-		
+
 		while(!curIn[0].equalsIgnoreCase("quit")){
-			
-		
-			//System.out.println("Room.plays " + Room.plays);
-			//System.out.println("Room.events " + Room.events);
-			if(Room.plays > Room.events){
-				curEvent = eventArr[Room.events];
-				curEvent.printMessage();
-				System.out.println();
-				
-			}
+
 			if(curEvent != null && curEvent.isComplete()){
 				curEvent = null;
 				Room.events++;
 			}
 			
+			if(Room.plays > Room.events){
+				curEvent = eventArr[Room.events];
+				curEvent.printMessage();
+				System.out.println();
+
+				if(Room.plays == 4){
+					isDark = true;
+					System.out.println("There's a BOOM and the power goes \n" +
+							"out! Everything is dark.");
+				}
+
+			}
+
 			noun = "";
 			if(curIn.length > 1){
 				//Makes noun from curIn
@@ -85,86 +92,182 @@ public class Game {
 				}
 				noun = noun.trim();
 			}
-			
+
 			// Increment timer
 			Room.time++;
-			
+
 			if(isDark){
-				System.out.println("You're stuck in the dark. You get the\n" +
+				System.out.println("You're stuck in the dark. You get the" +
 						"feeling you may be eaten by a Bjork.");
 				turnsInDark++;
 				if (turnsInDark > 5){
 					System.out.println("You have been eaten by a Bjork.");
+					printPoints();
+					userIn.close();
+					return;
 				}
 			}
-			
+
 			// Look through valid commands
-			switch(curIn[0]){
-			
-			case "inventory":
-				inventory(inv);
-				break;
-				
-			case "look":
-				look(inv, curRoom, noun);
-				break;
-				
-			case "use":
-				use(inv, curRoom, noun);	
-				break;
-				
-			case "get":
-				get(inv, curRoom, noun);
-				break;
-				
-			case "wait":
-				waitTurn();
-				break;
-				
-			case "pun":
-				pun(curRoom);
-				break;
-				
-			case "talk":
-				talk(inv, curRoom, noun);
-				break;
-				
-			case "go":
-				Room newRoom = go(map, curRoom, noun);
-				if(newRoom != null){
-					curRoom = newRoom;
-					curRoom.enterRoom();
+			if(!isDark){
+				switch(curIn[0]){
+
+				case "inventory":
+					inventory(inv);
+					break;
+
+				case "look":
+					look(inv, curRoom, noun);
+					break;
+
+				case "use":
+					use(inv, curRoom, noun);	
+					break;
+
+				case "get":
+					get(inv, curRoom, noun);
+					break;
+
+				case "wait":
+					waitTurn();
+					break;
+
+				case "pun":
+					pun(curRoom);
+					break;
+
+				case "talk":
+					talk(inv, curRoom, noun);
+					break;
+
+				case "go":
+					Room newRoom = go(map, curRoom, noun);
+					if(newRoom != null){
+						curRoom = newRoom;
+						curRoom.enterRoom();
+					}
+					break;
+
+				case "save":
+					save(curRoom);
+					break;
+
+				case "attack":
+					attack();
+					break;
+
+				case "help":
+					help();
+					break;
+
+				default:
+					System.out.println("Invalid command.");
+					Room.time--;
+					break;
 				}
-				break;
-				
-			case "save":
-				save(curRoom);
-				break;
-				
-			case "attack":
-				attack();
-				break;
-				
-			case "help":
-				help();
-				break;
-				
-			default:
-				System.out.println("Invalid command.");
-				Room.time--;
-				break;
+			} else if (isDark && !lightOn){
+				System.out.println("LIGHTS NOT ON");
+				switch(curIn[0]){
+
+				case "inventory":
+					inventory(inv);
+					break;
+
+				case "use":
+					if(noun.equalsIgnoreCase("Phone")){
+						System.out.println("Thinking quickly, you whip out your phone and use \n" +
+								"the dim light of the screen to ward off the chill of the dark.\n" +
+								"You can dimly see around the room. But you will need to find\n" +
+								"a stronger light source to make navigate to the basement.");
+						lightOn = true;
+					} else {
+						System.out.println("It is too dark to use that.");
+					}
+					break;
+
+				case "wait":
+					waitTurn();
+					break;
+
+				case "pun":
+					pun(curRoom);
+					break;
+
+				case "help":
+					help();
+					break;
+
+				default:
+					System.out.println("It is way too dark to do that.");
+					Room.time--;
+					break;
+				}
+			} else {
+				System.out.println("LIGHTS ON");
+				switch(curIn[0]){
+
+				case "inventory":
+					inventory(inv);
+					break;
+
+				case "look":
+					look(inv, curRoom, noun);
+					break;
+
+				case "use":
+					if(noun.equalsIgnoreCase("flashlight")){
+						System.out.println("You turn on the flashlight! It's almost like\n" +
+								"the lights are on if you squint. Best get to the basement now.");
+						isDark = false;
+					} else {
+						System.out.println("There are more pressing things on your mind.");
+					}
+					break;
+
+				case "get":
+					get(inv, curRoom, noun);
+					break;
+
+				case "wait":
+					waitTurn();
+					break;
+
+				case "pun":
+					pun(curRoom);
+					break;
+
+				case "talk":
+					talk(inv, curRoom, noun);
+					break;
+
+				case "help":
+					help();
+					break;
+
+				default:
+					System.out.println("It's still too dark for you to leave the room.");
+					Room.time--;
+					break;
+				}
 			}
-			
+
 			System.out.print("> ");
 			curIn = parser.getCommand(userIn, curRoom, inv).split(" ");
-			
-			
+
+
 		}
 		System.out.println(curRoom.getName());
-		
+		printPoints();
+
+		userIn.close();
+
+	}
+
+	public static void printPoints(){
+
 		System.out.println("THANKS FOR PLAYING, C-C-C-CHUMP.");
 		System.out.println("Point total:" + Room.points + ".");
-		
+
 		// Dish out points
 		if(Room.points == Room.MAX_POINTS){ 
 			System.out.println("gg tryhard"); 
@@ -173,24 +276,22 @@ public class Game {
 		} else {
 			System.out.println("how ordinary");
 		}
-		
-		userIn.close();
-		
+
 	}
-	
+
 	public static void waitTurn(){
 		System.out.println("waiting...");
 	}
-	
+
 	public static void pun(Room curRoom){
 		curRoom.pun();
 	}
-	
+
 	public static void talk(Inventory inv, Room curRoom, String noun){
 		inv.talk(noun);
 		curRoom.talk(noun);
 	}
-	
+
 	public static void attack(){
 		System.out.println("Violence never solves anything!!!");
 	}
@@ -214,7 +315,7 @@ public class Game {
 			System.out.println("You don't need that " + noun);
 		}
 	}
-	
+
 	public static void look(Inventory inv, Room curRoom, String noun){
 		if(noun.equals("")){
 			curRoom.enterRoom();
@@ -258,13 +359,13 @@ public class Game {
 	public static Room go(Map map, Room curRoom, String direction) throws Exception{
 		if(map.go(curRoom, direction)){
 			return curRoom = map.getCurRoom();
-			
+
 		} else {
 			return null;
 		}
 	}
-	
-	
+
+
 
 
 
