@@ -55,12 +55,14 @@ public abstract class Room {
 	}
 	
 	public void enterRoom(){
-		System.out.println(name);
+		System.out.println(name.toUpperCase());
+		System.out.println();
 		printDesc();
-		printChanges();
+		//printChanges();
 		for(Item itm : items){
-			if(itm.canSee())
+			if(itm.canSee()){
 				System.out.println("There is a " + itm.getName() + " here.");
+			}
 		}
 	}
 	
@@ -98,7 +100,12 @@ public abstract class Room {
 		throw new Exception("Code is broken if this happens");
 	}
 	
-	public void use(Item itm){}
+	public void use(Item itm){
+		if(itm.canTake()){
+			System.out.println("You dropped your " + itm.getName());
+			items.add(itm);
+		}
+	}
 	
 	public void pun(){}
 	

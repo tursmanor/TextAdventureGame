@@ -10,7 +10,7 @@ public class Event {
 	
 	public Event (String msg){
 		components = new ArrayList<Item>();
-		message = msg;
+		message = "[Current Quest: " + msg + "]";
 	}
 	
 	//Adds a requirement to the event (for setting up events)

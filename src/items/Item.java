@@ -31,6 +31,10 @@ public abstract class Item {
 		hidden = true;
 	}
 	
+	public void reveal (){
+		hidden = false;
+	}
+	
 	public boolean canSee(){
 		return (canPickUp && !hidden);
 	}

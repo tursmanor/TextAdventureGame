@@ -5,7 +5,7 @@ public class Basement extends Room{
 	public Basement(String name) {
 		super(name);
 		//Description
-		this.description = "This is the basement";
+		this.description = "The basement is pitch dark. You can make out some vague outlines in your peripheral vision. Your flashlight picks out a small white BREAKER BOX in the back of the room. To the NORTH is the staircase leading up to the kitchen.";
 		this.changes = "CHANGES";
 	
 		//Adds directions

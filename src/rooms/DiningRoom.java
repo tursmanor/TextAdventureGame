@@ -10,7 +10,11 @@ public class DiningRoom extends Room{
 	public DiningRoom(String name) {
 		super(name);
 		//Description
-		this.description = "The dining room has a four-person wooden TABLE with CHAIRS pulled up around it. There’s a steaming stew in a casserole dish, some salad, and a pitcher of water on the table. Your PARENTS are seated on one side of the table. Your SISTER is sitting on the other side. To the NORTH is the living room. To the SOUTH is the kitchen. ";
+		this.description = "The dining room has a four-person wooden TABLE with \n" +
+				"CHAIRS pulled up around it. There's a steaming stew in a casserole\n" +
+				" dish, some salad, and a pitcher of water on the table. Your PARENTS\n" +
+				" are seated on one side of the table. To the NORTH is the living room.\n" +
+				" To the SOUTH is the kitchen. ";
 		this.changes = "CHANGES";
 	
 		//Adds directions
@@ -23,7 +27,6 @@ public class DiningRoom extends Room{
 		this.items.add(new Chair("Chair")); //Item 0
 		this.items.add(new Parents("Parents")); //item 1
 		this.items.add(new Dinner("Dinner")); //item 2
-	
 	}
 	
 	@Override 
@@ -33,8 +36,12 @@ public class DiningRoom extends Room{
 			itm.toggle();
 			if(itm.getActivated()){
 				System.out.println("You sit in the chair.");
+				this.directions.put("north", false);
+				this.directions.put("south", false);
 			} else {
 				System.out.println("You stand up and push the chair in.");
+				this.directions.put("north", true);
+				this.directions.put("south", true);
 			}
 				
 			break;
@@ -48,12 +55,16 @@ public class DiningRoom extends Room{
 					itm.hide();
 					System.out.println("You eat your dinner. Nom nom nom.");
 				} else {
-					System.out.println("Your parents want you to eat ");
+					System.out.println("Your parents want you to eat sitting down.");
 				}
 			}
-			
+			break;
 		default :
 			System.out.println("You can't use that " + itm.getName());
+			if(itm.canTake()){
+				System.out.println("You dropped your " + itm.getName());
+				items.add(itm);
+			}
 			break;
 		}
 	
