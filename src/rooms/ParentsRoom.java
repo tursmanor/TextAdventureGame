@@ -12,13 +12,12 @@ public class ParentsRoom extends Room{
 		super(name);
 		
 		//Description
-		this.description = "Your parent's room is decorated in shades of green. " +
-				"At one end of the room is their PARENT'S BED. You feel vaguely that you " +
+		this.description = "Your parent's room is decorated in shades of green. \n" +
+				"At one end of the room is their PARENT'S BED. You feel vaguely that you \n" +
 				"shouldn't be in here. To the SOUTH is the hallway.";
-		this.changes = "CHANGES";
 	
 		//Add items
-		items.add(new Bed("Parent's Bed", "A large king size bed with a wooden " +
+		items.add(new Bed("Parent's Bed", "A large king size bed with a wooden \n" +
 				"headboard. Underneath the bed is a TRICERATOPS PLUSH."));
 		items.add(new TriceratopsPlush("Triceratops Plush"));
 		items.add(new BedsheetsOnBed("Parent's Bedsheets","Your parents’ bedsheets " +
@@ -31,7 +30,9 @@ public class ParentsRoom extends Room{
 		this.directions.put("west", false);
 	}
 
-	// Command functions below
+	/**
+	 * reveal the triceratops plush if the player looks at the bed
+	 */
 	@Override
 		public void look(String itmName){
 			for(Item itm : items){

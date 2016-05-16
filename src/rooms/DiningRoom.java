@@ -3,7 +3,6 @@ package rooms;
 import items.Item;
 import items.characters.Parents;
 import items.nopickup.*;
-import items.pickup.*;
 
 public class DiningRoom extends Room{
 
@@ -15,7 +14,6 @@ public class DiningRoom extends Room{
 				" dish, some salad, and a pitcher of water on the table. Your PARENTS\n" +
 				" are seated on one side of the table. To the NORTH is the living room.\n" +
 				" To the SOUTH is the kitchen. ";
-		this.changes = "CHANGES";
 	
 		//Adds directions
 		this.directions.put("north", true);
@@ -29,9 +27,13 @@ public class DiningRoom extends Room{
 		this.items.add(new Dinner("Dinner")); //item 2
 	}
 	
+	/**
+	 * lets you sit/stand at the dinner table, and eat dinner
+	 */
 	@Override 
 	public void use(Item itm){
 		switch(itm.getName()){
+		
 		case "Chair":
 			itm.toggle();
 			if(itm.getActivated()){
@@ -45,6 +47,7 @@ public class DiningRoom extends Room{
 			}
 				
 			break;
+			
 		case "Dinner":
 			//If you are sitting down
 			if(itm.isComplete()){
@@ -59,6 +62,7 @@ public class DiningRoom extends Room{
 				}
 			}
 			break;
+			
 		default :
 			System.out.println("You can't use that " + itm.getName());
 			if(itm.canTake()){

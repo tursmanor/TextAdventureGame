@@ -10,7 +10,6 @@ public class Hallway extends Room{
 		super(name);
 		//Description
 		this.description = desc;
-		this.changes = "CHANGES";
 	
 		//Adds directions
 		this.directions.put("north", true);

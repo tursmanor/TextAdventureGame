@@ -21,7 +21,6 @@ public class YourRoom extends Room{
 				"small DESK with a COMPUTER on top of it. Your SISTER is sitting\n" +
 				"on her bed. Your own clean BED is on the other side of the room.\n" +
 				"There is a door to the SOUTH.";
-		this.changes = "CHANGES";
 		
 		//Add items - fixed
 		items.add(new Computer("Computer")); //Item 0

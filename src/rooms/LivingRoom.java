@@ -9,12 +9,11 @@ public class LivingRoom extends Room{
 		super(name);
 		// TODO Auto-generated constructor stub
 		//Description
-		this.description = "The comfotrable living room has a red COUCH " +
-				"that is great for sitting on when watching the TV. Since " +
-				"it's dark out, the CURTAINS have been drawn across the " +
-				"windows. To the WEST is the staircase leading to the " +
+		this.description = "The comfotrable living room has a red COUCH \n" +
+				"that is great for sitting on when watching the TV. Since \n" +
+				"it's dark out, the CURTAINS have been drawn across the \n" +
+				"windows. To the WEST is the staircase leading to the \n" +
 				"second-floor hallway. To the SOUTH is the dining room. ";
-		this.changes = "CHANGES";
 		
 		//Adds items - can pick up
 		items.add(new Couch("Couch"));
@@ -30,6 +29,9 @@ public class LivingRoom extends Room{
 		this.directions.put("west", true);
 	}
 	
+	/**
+	 * reveal the brontosaurus plush if player looks at the cushions
+	 */
 	@Override
 		public void look(String itmName){
 			for(Item itm : items){

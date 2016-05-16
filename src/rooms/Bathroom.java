@@ -5,8 +5,9 @@ public class Bathroom extends Room{
 	public Bathroom(String name) {
 		super(name);
 		//Description
-		this.description = "The bathroom has white tile stretching up to the ceiling. There is a MIRROR above the sink, and a SHOWER to the right. To the EAST is the hallway. ";
-		this.changes = "CHANGES";
+		this.description = "The bathroom has white tile stretching up to the ceiling. \n" +
+				"There is a MIRROR above the sink, and a SHOWER to the right. To the \n" +
+				"EAST is the hallway. ";
 	
 		//Adds directions
 		this.directions.put("north", false);

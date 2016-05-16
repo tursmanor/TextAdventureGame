@@ -67,7 +67,8 @@ public class Parser {
 	
 	public boolean isNoun (String str, Room rm, Inventory inv){
 		return rm.containsItem(str) || inv.containsItem(str) 
-				|| str.equalsIgnoreCase("me") || directions.contains(str);
+				|| str.equalsIgnoreCase("me") || directions.contains(str)
+				|| str.equalsIgnoreCase("phone");
 	}
 	
 	public String getCommand(Scanner in, Room rm, Inventory inv){

@@ -10,10 +10,9 @@ public class Closet extends Room {
 	public Closet(String name) {
 		super(name);
 		//Description
-		this.description = "The closet has an array of shelves stuffed with TOWELS, PILLOWS, " +
-				"and BEDSHEETS. You are slightly worried they will topple down any moment and " +
+		this.description = "The closet has an array of shelves stuffed with TOWELS, PILLOWS, \n" +
+				"and BEDSHEETS. You are slightly worried they will topple down any moment and \n" +
 				"engulf you. The hallway is to the SOUTH.";
-		this.changes = "CHANGES";
 	
 		//Adds items - can pick up
 		items.add(new Towels("Towels"));
@@ -28,6 +27,9 @@ public class Closet extends Room {
 		this.directions.put("west", false);
 	}
 	
+	/**
+	 * reveal the t-rex plush if the player looks at the towels
+	 */
 	@Override
 	public void look(String itmName){
 		for(Item itm : items){

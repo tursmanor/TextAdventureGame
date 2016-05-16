@@ -8,13 +8,13 @@ public class Kitchen extends Room {
 	public Kitchen(String name) {
 		super(name);
 		//Description
-		this.description = "This is the kitchen";
-		this.changes = "CHANGES";
+		this.description = "The kitchen is lined with wooden cabinets. \n" +
+				"There is a SINK with some DRAWERS underneath it. A wooden \n" +
+				"block with KNIVES is to the right of the sink. To the NORTH \n" +
+				"is the dining room. To the SOUTH is the door that leads down \n" +
+				"to the basement. ";
 	
 		//Adds items - can pick up
-		items.add(new DishSoap("Dish Soap"));
-		items.add(new Sponge("Sponge"));
-		items.add(new DirtyDishes("Dirty Dishes"));
 		
 		//Adds directions
 		this.directions.put("north", true);

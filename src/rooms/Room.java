@@ -10,15 +10,12 @@ public abstract class Room {
 	
 	private String name;
 	protected String description;
-	protected String changes;
 	protected List<Item> items;
 	protected List<Item> usableItems;
 	public Map<String, Boolean> directions;
 	
 	public static int points;
-	public static final int MAX_POINTS = 400;
 	public static int time;
-	public static boolean saved = false;
 	public static int plays = 0;
 	public static int events = 0;
 	
@@ -29,23 +26,35 @@ public abstract class Room {
 		this.directions = new HashMap<String, Boolean>();
 	}
 	
-	
+	/**
+	 * getter for name
+	 * @return name string
+	 */
 	public String getName(){
 		return name;
 	}
 	
+	/**
+	 * prints room description
+	 */
 	public void printDesc(){
 		System.out.println(description);
 	}
 	
-	public void printChanges(){
-		System.out.println(changes);
-	}
-	
+	/**
+	 * gets list of items in room
+	 * @return list of items 
+	 */
 	public List<Item> getItems(){
 		return items;
 	}
 	
+	/**
+	 * gets an item in the room using the item name
+	 * @param itmName name of the item
+	 * @return item object
+	 * @throws Exception if the item isn't found
+	 */
 	public Item getItem(String itmName) throws Exception{
 		for(Item itm : items){
 			if(itm.getName().equalsIgnoreCase(itmName)){ return itm; }
@@ -54,11 +63,13 @@ public abstract class Room {
 		throw new Exception("Item not found");
 	}
 	
+	/**
+	 * print necessary text when player enters a new room
+	 */
 	public void enterRoom(){
 		System.out.println(name.toUpperCase());
 		System.out.println();
 		printDesc();
-		//printChanges();
 		for(Item itm : items){
 			if(itm.canSee()){
 				System.out.println("There is a " + itm.getName() + " here.");
@@ -66,6 +77,11 @@ public abstract class Room {
 		}
 	}
 	
+	/**
+	 * Check if the room contains the given item, given the item's name 
+	 * @param str the name of the item
+	 * @return true or false
+	 */
 	public boolean containsItem(String str){
 		for(Item itm : items){
 			if(itm.getName().equalsIgnoreCase(str)){ return true; }
@@ -73,11 +89,19 @@ public abstract class Room {
 		return false;
 	}
 	
+	/**
+	 * increment point counter
+	 */
 	public void addPoints(){
 		points++;
 	}
 	
 	// Command functions below
+	
+	/**
+	 * prints the item's description if it is in the room
+	 * @param itmName the item's name
+	 */
 	public void look(String itmName){
 		for(Item itm : items){
 			if(itm.getName().equalsIgnoreCase(itmName)){
@@ -86,6 +110,12 @@ public abstract class Room {
 		}
 	}
 	
+	/**
+	 * if the item in the room is visible, remove it from the room and return it
+	 * @param itmName the name of the item
+	 * @return the item object
+	 * @throws Exception we should never see this because the parser shouldn't accept invalid nouns
+	 */
 	public Item get(String itmName) throws Exception{
 		for(Item itm : items){
 			if(itm.getName().equalsIgnoreCase(itmName)){
@@ -100,6 +130,10 @@ public abstract class Room {
 		throw new Exception("Code is broken if this happens");
 	}
 	
+	/**
+	 * use an item
+	 * @param itm an item
+	 */
 	public void use(Item itm){
 		if(itm.canTake()){
 			System.out.println("You dropped your " + itm.getName());
@@ -107,8 +141,15 @@ public abstract class Room {
 		}
 	}
 	
+	/**
+	 * make a pun
+	 */
 	public void pun(){}
 	
+	/** 
+	 * talk to an item
+	 * @param itmName the item name
+	 */
 	public void talk(String itmName){
 		for(Item itm : items){
 			if(itm.getName().equalsIgnoreCase(itmName)){

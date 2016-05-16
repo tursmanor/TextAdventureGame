@@ -40,7 +40,7 @@ public class Game {
 		eventArr[2].addReq(map.getRoom(2, 0).getItem("Bedsheet"));
 
 		eventArr[3] = new Event("You need to get to turn the power back on.");
-
+		eventArr[3].addReq(map.getRoom(4, 4).getItem("Breaker Switch"));
 
 		//Introduction
 		System.out.println("Welcome to BORK SIMULATOR 2k16. \n" +
@@ -63,7 +63,7 @@ public class Game {
 
 		String[] curIn = parser.getCommand(userIn, curRoom, inv).split(" ");
 		String noun = "";
-
+		
 		while(!curIn[0].equalsIgnoreCase("quit")){
 
 			if(curEvent != null && curEvent.isComplete()){
@@ -97,15 +97,22 @@ public class Game {
 			Room.time++;
 
 			if(isDark){
-				System.out.println("You're stuck in the dark. You get the" +
+				System.out.println("You're stuck in the dark. You get the " +
 						"feeling you may be eaten by a Bjork.");
 				turnsInDark++;
-				if (turnsInDark > 5){
+				if (turnsInDark > 10){
 					System.out.println("You have been eaten by a Bjork.");
 					printPoints();
 					userIn.close();
 					return;
 				}
+			}
+			
+			if(Room.plays == 5){
+				printWin();
+				printPoints();
+				userIn.close();
+				return;
 			}
 
 			// Look through valid commands
@@ -146,10 +153,6 @@ public class Game {
 						curRoom = newRoom;
 						curRoom.enterRoom();
 					}
-					break;
-
-				case "save":
-					save(curRoom);
 					break;
 
 				case "attack":
@@ -263,39 +266,77 @@ public class Game {
 
 	}
 
+	/**
+	 * print win text
+	 */
+	public static void printWin(){
+		System.out.println("You lost your save data! But with the help of your trusty \n" +
+				"BORK MAP, you were able to finally complete the game! You sit smugly \n" +
+				"while your final score is tallied. You got a total 2047/2048 points. \n" +
+				"You stare at the computer screen, unbelieving. What could possibly have \n" +
+				"gone wrong? What mistake could you have made? With these thoughts wracking \n" +
+				"your tired brain, you slip into an uneasy slumber...");
+	}
+	
+	/**
+	 * print total points
+	 */
 	public static void printPoints(){
 
 		System.out.println("THANKS FOR PLAYING, C-C-C-CHUMP.");
 		System.out.println("Point total:" + Room.points + ".");
 
 		// Dish out points
-		if(Room.points == Room.MAX_POINTS){ 
+		if(Room.points >= 10){ 
 			System.out.println("gg tryhard"); 
 		} else if(Room.points == 0){
 			System.out.println("brutal. savage. rekt.");
 		} else {
-			System.out.println("how ordinary");
+			System.out.println("How ordinary");
 		}
 
 	}
 
+	/**
+	 * wait one turn
+	 */
 	public static void waitTurn(){
-		System.out.println("waiting...");
+		System.out.println("Waiting...");
 	}
 
+	/**
+	 * make a pun, dependent on the current room
+	 * @param curRoom
+	 */
 	public static void pun(Room curRoom){
 		curRoom.pun();
 	}
 
+	/**
+	 * talk to something
+	 * @param inv your inventory
+	 * @param curRoom the current room
+	 * @param noun the current noun
+	 */
 	public static void talk(Inventory inv, Room curRoom, String noun){
 		inv.talk(noun);
 		curRoom.talk(noun);
 	}
 
+	/**
+	 * attack something
+	 */
 	public static void attack(){
 		System.out.println("Violence never solves anything!!!");
 	}
 
+	/**
+	 * add something to your inventory for one point
+	 * @param inv your inventory
+	 * @param curRoom the current room
+	 * @param noun the current noun
+	 * @throws Exception
+	 */
 	public static void get(Inventory inv, Room curRoom, String noun) throws Exception{
 		Item itm = curRoom.get(noun);
 		if(itm != null){
@@ -304,6 +345,13 @@ public class Game {
 		}
 	}
 
+	/**
+	 * use an item
+	 * @param inv the current inventory
+	 * @param curRoom the current room
+	 * @param noun the current noun
+	 * @throws Exception
+	 */
 	public static void use(Inventory inv, Room curRoom, String noun) throws Exception{
 		if(inv.containsItem(noun)){
 			curRoom.use(inv.useItem(noun));
@@ -316,6 +364,12 @@ public class Game {
 		}
 	}
 
+	/**
+	 * look at something
+	 * @param inv the current inventory
+	 * @param curRoom the current room
+	 * @param noun the current noun
+	 */
 	public static void look(Inventory inv, Room curRoom, String noun){
 		if(noun.equals("")){
 			curRoom.enterRoom();
@@ -325,10 +379,17 @@ public class Game {
 		}
 	}
 
+	/**
+	 * print current inventory
+	 * @param inv the current inventory
+	 */
 	public static void inventory(Inventory inv){
 		inv.printInv();
 	}
 
+	/**
+	 * print list of commands
+	 */
 	public static void help(){
 		System.out.println("Command List");
 		System.out.println("Wait - wait in the current room one turn.");
@@ -341,21 +402,17 @@ public class Game {
 				"Permitted directions: north, south, east, and west.");
 		System.out.println("Look <noun> - look at <noun>");
 		System.out.println("Inventory - prints what you are currently carrying");
-		System.out.println("Save - save your current BORK game");
 		System.out.println("Help - see (this) list of commands");
 	}
 
-	public static void save(Room curRoom) throws Exception{
-		if(curRoom.getName().equalsIgnoreCase("Your Room")){
-			if(curRoom.getItem("Computer").hasContents()){
-				System.out.println("Saving your BORK game...");
-				curRoom.saved = true;
-			}
-		} else {
-			System.out.println("You can't save BORK! It isn't here.");
-		}
-	}
-
+	/**
+	 * move the player to a new room
+	 * @param map the game map
+	 * @param curRoom the current room
+	 * @param direction the desired direction
+	 * @return new room
+	 * @throws Exception
+	 */
 	public static Room go(Map map, Room curRoom, String direction) throws Exception{
 		if(map.go(curRoom, direction)){
 			return curRoom = map.getCurRoom();
