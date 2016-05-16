@@ -144,7 +144,9 @@ public abstract class Room {
 	/**
 	 * make a pun
 	 */
-	public void pun(){}
+	public void pun(){
+		System.out.println("Punfortunately we ran out of time for coming up with more puns.");
+	}
 	
 	/** 
 	 * talk to an item

@@ -67,5 +67,7 @@ public abstract class Item {
 		return !(contents == null);
 	}
 	
-	public void talkToItem(){};
+	public void talkToItem(){
+		System.out.println("Look at you, talking to inanimate objects.");
+	}
 }

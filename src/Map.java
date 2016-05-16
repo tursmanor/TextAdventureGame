@@ -7,6 +7,7 @@ public class Map {
 	private int yCoord;
 	
 	public Map(){
+		
 		//Initialize Game Map
 				gameMap = new Room[5][5];
 				for(int i = 0; i < gameMap[0].length; i++){
@@ -16,9 +17,14 @@ public class Map {
 				}
 				
 				//Some room descriptions
-				String leftHall = "The second floor hallway is adorned with a CARPET. There is a bathroom to the WEST. Your parent’s room is NORTH.";
-				String centerHall = "The second-floor hallway is adorned with a CARPET and a PAINTING of some flowers. It continues to the EAST and WEST. There is a closet to the NORTH. ";
-				String rightHall = "The second floor hallway is adorned with a CARPET. It continues to the WEST. To the EAST is a staircase leading leading to the living room. To the NORTH is your room.";
+				String leftHall = "The second floor hallway is adorned with a CARPET. \n" +
+						"There is a bathroom to the WEST. Your parent's room is NORTH.";
+				String centerHall = "The second-floor hallway is adorned with a CARPET \n" +
+						"and a painting of some flowers. It continues to the EAST and WEST.\n" +
+						" There is a closet to the NORTH. ";
+				String rightHall = "The second floor hallway is adorned with a CARPET. \n" +
+						"It continues to the WEST. To the EAST is a staircase leading \n" +
+						"leading to the living room. To the NORTH is your room.";
 				
 				//Set rooms
 				gameMap[0][1] = new ParentsRoom("Your Parents' Room");

@@ -1,6 +1,7 @@
 package rooms;
 import items.Item;
 import items.characters.Sister;
+import items.nopickup.Bed;
 import items.nopickup.Computer;
 import items.nopickup.Desk;
 import items.nopickup.DeskDrawer;
@@ -17,21 +18,22 @@ public class YourRoom extends Room{
 		this.description = "You share your room with your little sister. If \n" +
 				"your half of the room is a beachline, hers is the incoming \n" +
 				"tsunami. You've been trying to convince your parents to move \n" +
-				"her into the basement. Next to your messy SISTER'S BED is your\n" +
+				"her into the basement. Next to your messy sister's bed is your\n" +
 				"small DESK with a COMPUTER on top of it. Your SISTER is sitting\n" +
 				"on her bed. Your own clean BED is on the other side of the room.\n" +
 				"There is a door to the SOUTH.";
 		
-		//Add items - fixed
+		//Add items 
 		items.add(new Computer("Computer")); //Item 0
+		items.add(new Flashlight("Flashlight"));
 		items.add(new Sister("Sister"));
 		items.add(new Desk("Desk"));
 		items.add(new DeskDrawer("Desk Drawer"));
 		
 		//Adds items - can pick up
 		items.add(new FloppyDisk("BORK Floppy Disk"));
-		items.add(new Flashlight("Flashlight"));
 		items.add(new Pen("Pen"));
+		items.add(new Bed("Bed","A well-made twin bed with a green comforter."));
 		
 		//Adds usable items
 		usableItems.add(new FloppyDisk("BORK Floppy Disk"));
@@ -86,17 +88,17 @@ public class YourRoom extends Room{
 			break;
 			
 		case "Bedsheet":
-			items.add(1, itm);
+			items.add(2, itm);
 			System.out.println("You spread the bedsheet on your table");
 			itm.complete();
 			break;
 			
 		case "Pen":
-			if(items.get(1).getName().equalsIgnoreCase("Bedsheet")){
+			if(items.get(2).getName().equalsIgnoreCase("Bedsheet")){
 				itm.complete();
 				System.out.println("You diagram a map on the bedsheet and hope your parents won't be mad.");
 				items.add(new BorkMap("BORK map"));
-				items.remove(1);
+				items.remove(2);
 			} else {
 				items.add(itm);
 				System.out.println("There's nothing to write on here. You drop the pen in despair.");
@@ -120,7 +122,7 @@ public class YourRoom extends Room{
 		for(Item itm : items){
 			if(itm.getName().equalsIgnoreCase(itmName)){
 				if(itm.getName().equalsIgnoreCase("Desk Drawer")){
-					items.get(5).reveal();
+					items.get(1).reveal();
 				}
 				System.out.println(itm.getDescription());
 			}

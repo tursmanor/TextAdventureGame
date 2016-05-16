@@ -1,5 +1,3 @@
-import java.io.FileNotFoundException;
-import java.util.List;
 import java.util.Scanner;
 import rooms.*;
 import items.*;
@@ -20,6 +18,7 @@ public class Game {
 		int turnsInDark = 0;
 		boolean isDark = false;
 		boolean lightOn = false;
+		boolean darkTriggerOnce = false;
 
 		//Adding Events
 		eventArr[0] = new Event("Your parents are calling you for dinner. \n" +
@@ -27,7 +26,7 @@ public class Game {
 		eventArr[0].addReq(map.getRoom(4, 2).getItem("Dinner"));
 		eventArr[0].addReq(map.getRoom(4, 2).getItem("Parents"));
 
-		eventArr[1] = new Event("Your sister lost her dinosaur stuffed animals and won't \n" +
+		eventArr[1] = new Event("Your sister lost her three dinosaur stuffed animals and won't \n" +
 				"leave you alone til you find them for her.");
 		eventArr[1].addReq(map.getRoom(1, 0).getItem("Triceratops Plush"));
 		eventArr[1].addReq(map.getRoom(4, 1).getItem("Brontosaurus Plush"));
@@ -63,21 +62,22 @@ public class Game {
 
 		String[] curIn = parser.getCommand(userIn, curRoom, inv).split(" ");
 		String noun = "";
-		
+
 		while(!curIn[0].equalsIgnoreCase("quit")){
 
 			if(curEvent != null && curEvent.isComplete()){
 				curEvent = null;
 				Room.events++;
 			}
-			
-			if(Room.plays > Room.events){
+
+			if(Room.plays > Room.events && Room.plays < 5){
 				curEvent = eventArr[Room.events];
 				curEvent.printMessage();
 				System.out.println();
 
-				if(Room.plays == 4){
+				if(Room.plays == 4 && !darkTriggerOnce){
 					isDark = true;
+					darkTriggerOnce = true;
 					System.out.println("There's a BOOM and the power goes \n" +
 							"out! Everything is dark.");
 				}
@@ -100,14 +100,14 @@ public class Game {
 				System.out.println("You're stuck in the dark. You get the " +
 						"feeling you may be eaten by a Bjork.");
 				turnsInDark++;
-				if (turnsInDark > 10){
+				if (turnsInDark > 15){
 					System.out.println("You have been eaten by a Bjork.");
 					printPoints();
 					userIn.close();
 					return;
 				}
 			}
-			
+
 			if(Room.plays == 5){
 				printWin();
 				printPoints();
@@ -169,7 +169,6 @@ public class Game {
 					break;
 				}
 			} else if (isDark && !lightOn){
-				System.out.println("LIGHTS NOT ON");
 				switch(curIn[0]){
 
 				case "inventory":
@@ -183,6 +182,10 @@ public class Game {
 								"You can dimly see around the room. But you will need to find\n" +
 								"a stronger light source to make navigate to the basement.");
 						lightOn = true;
+					} else if(noun.equalsIgnoreCase("flashlight")){
+						System.out.println("You turn on the flashlight! It's almost like\n" +
+								"the lights are on if you squint. Best get to the basement now.");
+						isDark = false;
 					} else {
 						System.out.println("It is too dark to use that.");
 					}
@@ -206,7 +209,6 @@ public class Game {
 					break;
 				}
 			} else {
-				System.out.println("LIGHTS ON");
 				switch(curIn[0]){
 
 				case "inventory":
@@ -277,17 +279,18 @@ public class Game {
 				"gone wrong? What mistake could you have made? With these thoughts wracking \n" +
 				"your tired brain, you slip into an uneasy slumber...");
 	}
-	
+
 	/**
 	 * print total points
 	 */
 	public static void printPoints(){
 
+		System.out.println();
 		System.out.println("THANKS FOR PLAYING, C-C-C-CHUMP.");
 		System.out.println("Point total:" + Room.points + ".");
 
 		// Dish out points
-		if(Room.points >= 10){ 
+		if(Room.points >= 15){ 
 			System.out.println("gg tryhard"); 
 		} else if(Room.points == 0){
 			System.out.println("brutal. savage. rekt.");

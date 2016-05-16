@@ -5,7 +5,7 @@ import items.characters.Parents;
 import items.nopickup.*;
 
 public class DiningRoom extends Room{
-
+	
 	public DiningRoom(String name) {
 		super(name);
 		//Description
@@ -25,6 +25,7 @@ public class DiningRoom extends Room{
 		this.items.add(new Chair("Chair")); //Item 0
 		this.items.add(new Parents("Parents")); //item 1
 		this.items.add(new Dinner("Dinner")); //item 2
+		
 	}
 	
 	/**
